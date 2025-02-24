@@ -1,1 +1,1 @@
-export { sum } from "./size/dummy";
+export { sum } from "./sizes/dummy";

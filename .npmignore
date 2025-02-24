@@ -1,0 +1,9 @@
+.gitignore
+.npmignore
+.prettierignore
+.prettierrc.js
+node_modules
+screenshots
+src
+tsconfig.json
+tsup.config.ts

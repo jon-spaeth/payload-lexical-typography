@@ -1,1 +1,1 @@
-console.log("PayloadCMS Lexical Typography")
+export { sum } from "./size/dummy";

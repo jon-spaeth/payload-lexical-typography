@@ -2,7 +2,6 @@ import { LexicalEditor } from "@payloadcms/richtext-lexical/lexical";
 
 import { useEffect, useState } from "react";
 
-import { ToolbarGroupItem } from "@payloadcms/richtext-lexical";
 import { ColorPicker } from "./ColorPicker";
 
 export const Dropdown = ({ editor, item }: { editor: LexicalEditor; item: any }) => {

@@ -95,7 +95,9 @@ export const ColorPicker = ({
           }}
           style={{
             width: "100%",
-            padding: "8px",
+            paddingTop: "8px",
+            paddingLeft: "8px",
+            paddingRight: "8px",
             paddingBottom: "0px",
             display: "flex",
             flexDirection: "column",

@@ -10,6 +10,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
+    "jsx": "react-jsx",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true

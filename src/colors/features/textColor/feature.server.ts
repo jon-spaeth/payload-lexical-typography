@@ -1,8 +1,18 @@
 import { createServerFeature } from "@payloadcms/richtext-lexical";
+import { TextColorFeatureProps } from "./feature.client";
 
-export const TextColorFeature = createServerFeature({
-  feature: {
-    // ClientFeature: "./feature.client#TextColorClientFeature",
+export const TextColorFeature = createServerFeature<
+  TextColorFeatureProps,
+  TextColorFeatureProps,
+  TextColorFeatureProps
+>({
+  feature({ props }) {
+    return {
+      ClientFeature: "payload-lexical-typography/client#TextColorClientFeature",
+      clientFeatureProps: {
+        colors: props?.colors || [],
+      },
+    };
   },
-  key: "textcolor",
+  key: "textColor",
 });

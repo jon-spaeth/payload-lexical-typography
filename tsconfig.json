@@ -6,6 +6,7 @@
     "esModuleInterop": true,
     "declaration": true,
     "declarationMap": true,
+    "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./src",

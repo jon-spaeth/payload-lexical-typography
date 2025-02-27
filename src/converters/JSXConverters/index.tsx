@@ -1,3 +1,3 @@
 import { TextJSXConverter } from "./TextJSXConverter";
 
-export const TypographyJSXConverters = [TextJSXConverter];
+export const TypographyJSXConverters = { ...TextJSXConverter };

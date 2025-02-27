@@ -1,1 +1,1 @@
-export { sum } from "./size/dummy";
+export { TextColorFeature } from "./colors/features/textColor/feature.server";

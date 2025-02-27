@@ -2,6 +2,8 @@
 .npmignore
 .prettierignore
 .prettierrc.js
+eslint.config.mjs
+pnpm-lock.yaml
 node_modules
 screenshots
 src

@@ -32,6 +32,10 @@
     "richtext",
     "lexical"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AdrianMaj/payload-lexical-typography"
+  },
   "author": "Adrian Maj",
   "license": "MIT",
   "packageManager": "pnpm@10.5.1",

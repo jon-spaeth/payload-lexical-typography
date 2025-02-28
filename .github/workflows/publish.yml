@@ -2,8 +2,6 @@ on:
   push:
     tags:
       - 'v*'
-    branches:
-      - main
 
 jobs:
   build-and-test:
@@ -11,17 +9,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+          
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
-      
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
-          run_install: false
       
       - name: Install dependencies
         run: pnpm install
@@ -31,6 +28,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -38,12 +40,6 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org/
           cache: 'pnpm'
-      
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
-          run_install: false
       
       - name: Install dependencies
         run: pnpm install

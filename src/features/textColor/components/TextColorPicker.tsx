@@ -15,7 +15,7 @@ const injectStyles = () => {
   document.head.appendChild(style);
 };
 
-export const ColorPicker = ({
+export const TextColorPicker = ({
   color,
   onChange,
   colors,

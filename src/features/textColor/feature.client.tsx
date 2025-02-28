@@ -12,7 +12,7 @@ import {
 import { useEffect } from "react";
 
 import { TEXT_COLOR_COMMAND } from "./command";
-import { Dropdown } from "./components/Dropdown";
+import { TextColorDropdown } from "./components/TextColorDropdown";
 import { TextColorIcon } from "./components/TextColorIcon";
 
 import { getSelection } from "../../utils/getSelection";
@@ -46,7 +46,7 @@ export const TextColorClientFeature = createClientFeature<TextColorFeatureProps,
         {
           Component: () => {
             const [editor] = useLexicalComposerContext();
-            return Dropdown({
+            return TextColorDropdown({
               editor,
               item: {
                 command: TEXT_COLOR_COMMAND,

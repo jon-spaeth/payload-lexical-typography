@@ -9,7 +9,8 @@ export const TextJSXConverter: JSXConverters<SerializedTextNode> = {
     if (node.style) {
       let match = /(?:^|;)\s?color: ([^;]+)/.exec(node.style);
       if (match) styles.color = match[1];
-      match = /(?:^|;)\s?size: ([^;]+)/.exec(node.style);
+
+      match = /(?:^|;)\s?font-size: ([^;]+)/.exec(node.style);
       if (match) styles.fontSize = match[1];
     }
 

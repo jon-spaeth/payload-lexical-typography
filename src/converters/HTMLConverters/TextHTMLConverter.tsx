@@ -10,9 +10,14 @@ export const TextHTMLConverter: HTMLConverter<SerializedTextNode> = {
     let styles = "";
 
     if (node.style) {
-      const match = /(?:^|;)\s?color: ([^;]+)/.exec(node.style);
+      let match = /(?:^|;)\s?color: ([^;]+)/.exec(node.style);
       if (match) {
-        styles = `color: ${match[1]}`;
+        styles = `${styles} color: ${match[1]};`;
+      }
+
+      match = /(?:^|;)\s?font-size: ([^;]+)/.exec(node.style);
+      if (match) {
+        styles = `${styles} font-size: ${match[1]};`;
       }
     }
 

@@ -21,5 +21,12 @@ export const Dropdown = ({ editor, item }: { editor: LexicalEditor; item: TextCo
     });
   }, [editor, item]);
 
-  return <ColorPicker color={activeColor} onChange={onChange} colors={item.colors ?? []} />;
+  return (
+    <ColorPicker
+      color={activeColor}
+      onChange={onChange}
+      colors={item.colors ?? []}
+      hideAttribution={item.hideAttribution}
+    />
+  );
 };

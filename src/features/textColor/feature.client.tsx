@@ -18,19 +18,23 @@ import { TextColorIcon } from "./components/TextColorIcon";
 import { getSelection } from "../../utils/getSelection";
 
 export type TextColorFeatureProps = {
-  colors: string[];
+  colors?: string[];
+  hideAttribution?: boolean;
 };
 
 export type TextColorItem = ToolbarGroupItem & {
   command: Record<string, unknown>;
   current: () => string | null;
   colors?: string[];
+  hideAttribution?: boolean;
 };
 
 export const TextColorClientFeature = createClientFeature<TextColorFeatureProps, TextColorItem>(
   ({ props }) => {
     const colors =
-      props?.colors.length > 0 ? props.colors : ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF"];
+      props?.colors && props?.colors.length > 0
+        ? props.colors
+        : ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF"];
 
     const DropdownComponent: ToolbarGroup = {
       type: "dropdown",
@@ -51,6 +55,7 @@ export const TextColorClientFeature = createClientFeature<TextColorFeatureProps,
                   return selection ? $getSelectionStyleValueForProperty(selection, "color", "") : null;
                 },
                 colors,
+                hideAttribution: props?.hideAttribution,
                 key: "textColor",
               },
             });

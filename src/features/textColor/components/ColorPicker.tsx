@@ -19,10 +19,12 @@ export const ColorPicker = ({
   color,
   onChange,
   colors,
+  hideAttribution,
 }: {
   color: string;
   onChange: (color: string) => void;
   colors: string[];
+  hideAttribution?: boolean;
 }) => {
   const [predefinedColors, setPredefinedColors] = useState(true);
 
@@ -159,17 +161,19 @@ export const ColorPicker = ({
         >
           Switch to {predefinedColors ? "picker" : "predefined"}
         </button>
-        <p
-          style={{
-            color: "var(--theme-elevation-650)",
-            fontSize: "10px",
-          }}
-        >
-          Made with ❤️ by{" "}
-          <a target="_blank" href="https://github.com/AdrianMaj">
-            @AdrianMaj
-          </a>
-        </p>
+        {!hideAttribution && (
+          <p
+            style={{
+              color: "var(--theme-elevation-650)",
+              fontSize: "10px",
+            }}
+          >
+            Made with ❤️ by{" "}
+            <a target="_blank" href="https://github.com/AdrianMaj">
+              @AdrianMaj
+            </a>
+          </p>
+        )}
       </div>
     </div>
   );

@@ -1,1 +1,1 @@
-export { TextColorFeature } from "./colors/features/textColor/feature.server";
+export { TextColorFeature } from "./features/textColor/feature.server";

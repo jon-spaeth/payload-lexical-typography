@@ -25,9 +25,11 @@ export const ColorPicker = ({
   colors: string[];
 }) => {
   const [predefinedColors, setPredefinedColors] = useState(true);
+
   useEffect(() => {
     injectStyles();
   }, []);
+
   return (
     <div
       style={{

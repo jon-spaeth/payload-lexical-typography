@@ -12,9 +12,26 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 });
 
+const peerDependencies = [
+  "@payloadcms/richtext-lexical",
+  "@payloadcms/richtext-lexical/react",
+  "@payloadcms/richtext-lexical/lexical",
+  "@payloadcms/richtext-lexical/client",
+  "@payloadcms/richtext-lexical/lexical/react/LexicalComposerContext",
+  "@payloadcms/richtext-lexical/lexical/selection",
+];
+
 export default [
   {
-    ignores: ["**/*.js", "**/*.jsx", "src/app/(payload)/**/*", "src/payload-types.ts"],
+    // Ignore patterns for npm package context
+    ignores: [
+      "**/*.js",
+      "dist/**/*",
+      "coverage/**/*",
+      "node_modules/**/*",
+      "tsup.config.ts",
+      "eslint.config.mjs",
+    ],
   },
   ...fixupConfigRules(
     compat.extends(
@@ -23,18 +40,26 @@ export default [
       "plugin:@typescript-eslint/stylistic-type-checked",
       "plugin:import/recommended",
       "plugin:import/typescript",
-      "next/core-web-vitals",
       "prettier",
     ),
   ),
   {
     languageOptions: {
-      ecmaVersion: 5,
-      sourceType: "script",
+      ecmaVersion: 2022,
+      sourceType: "module",
 
       parserOptions: {
         project: "tsconfig.json",
       },
+    },
+
+    settings: {
+      "import/resolver": {
+        node: {
+          extensions: [".js", ".jsx", ".ts", ".tsx"],
+        },
+      },
+      "import/core-modules": peerDependencies,
     },
 
     rules: {
@@ -56,15 +81,6 @@ export default [
       "import/no-mutable-exports": "error",
       "import/no-cycle": "error",
       "import/no-default-export": "error",
-
-      // "@typescript-eslint/ban-types": [
-      //   "error",
-      //   {
-      //     types: {
-      //       "{}": false,
-      //     },
-      //   },
-      // ],
 
       "@typescript-eslint/consistent-type-imports": [
         "error",
@@ -111,19 +127,10 @@ export default [
           checksVoidReturn: false,
         },
       ],
-
-      "no-restricted-imports": [
-        "error",
-        {
-          name: "next/router",
-          message: "Please use next/navigation instead.",
-        },
-      ],
     },
   },
   {
-    files: ["src/app/**/{page,layout,loading,route}.ts?(x)", "**/tailwind.config.ts"],
-
+    files: ["src/index.ts", "**/examples/**/*"],
     rules: {
       "import/no-default-export": "off",
     },

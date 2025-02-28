@@ -1,11 +1,13 @@
 import { COMMAND_PRIORITY_CRITICAL, SELECTION_CHANGE_COMMAND } from "@payloadcms/richtext-lexical/lexical";
+import { useLexicalComposerContext } from "@payloadcms/richtext-lexical/lexical/react/LexicalComposerContext";
 import {
   $getSelectionStyleValueForProperty,
   $patchStyleText,
 } from "@payloadcms/richtext-lexical/lexical/selection";
-import { useLexicalComposerContext } from "@payloadcms/richtext-lexical/lexical/react/LexicalComposerContext";
+
 import { useEffect, useState } from "react";
-import { getSelection } from "../../../../utils/getSelection";
+
+import { getSelection } from "../../../utils/getSelection";
 import { TEXT_COLOR_COMMAND } from "../command";
 
 export const TextColorIcon = () => {
@@ -14,7 +16,7 @@ export const TextColorIcon = () => {
 
   const updateCurrentColor = () => {
     const selection = getSelection();
-    selection && setColor($getSelectionStyleValueForProperty(selection, "color", ""));
+    if (selection) setColor($getSelectionStyleValueForProperty(selection, "color", ""));
     return false;
   };
 
@@ -25,7 +27,7 @@ export const TextColorIcon = () => {
         setColor(payload.color);
         editor.update(() => {
           const selection = getSelection();
-          selection && $patchStyleText(selection, { color: payload.color || "" });
+          if (selection) $patchStyleText(selection, { color: payload.color || "" });
         });
         return false;
       },

@@ -1,5 +1,6 @@
 import { createServerFeature } from "@payloadcms/richtext-lexical";
-import { TextColorFeatureProps } from "./feature.client";
+
+import { type TextColorFeatureProps } from "./feature.client";
 
 export const TextColorFeature = createServerFeature<
   TextColorFeatureProps,

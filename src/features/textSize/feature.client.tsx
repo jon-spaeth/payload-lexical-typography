@@ -19,7 +19,7 @@ import { getSelection } from "../../utils/getSelection";
 
 export type TextSizeFeatureProps = {
   hideAttribution?: boolean;
-  sizeOptions?: { value: string; label: string }[];
+  sizes?: { value: string; label: string }[];
   method?: "replace" | "combine";
   scroll?: boolean;
 };
@@ -49,7 +49,7 @@ export const TextSizeClientFeature = createClientFeature<TextSizeFeatureProps, T
                 return selection ? $getSelectionStyleValueForProperty(selection, "font-size", "") : null;
               },
               hideAttribution: props?.hideAttribution,
-              sizeOptions: props?.sizeOptions,
+              sizes: props?.sizes,
               method: props?.method,
               scroll: props?.scroll,
               key: "textSize",

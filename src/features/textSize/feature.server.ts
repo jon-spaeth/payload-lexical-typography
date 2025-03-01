@@ -12,7 +12,7 @@ export const TextSizeFeature = createServerFeature<
       ClientFeature: "payload-lexical-typography/client#TextSizeClientFeature",
       clientFeatureProps: {
         hideAttribution: props?.hideAttribution,
-        sizeOptions: props?.sizeOptions,
+        sizes: props?.sizes,
         method: props?.method,
         scroll: props?.scroll,
       },

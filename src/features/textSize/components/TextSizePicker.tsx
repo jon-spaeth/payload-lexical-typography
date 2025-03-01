@@ -4,14 +4,14 @@ export const SizePicker = ({
   size,
   onChange,
   hideAttribution,
-  sizeOptions,
+  sizes,
   method = "replace",
   scroll = true,
 }: {
   size: string;
   onChange: (size: string) => void;
   hideAttribution?: boolean;
-  sizeOptions?: { value: string; label: string }[];
+  sizes?: { value: string; label: string }[];
   method?: "replace" | "combine";
   scroll?: boolean;
 }) => {
@@ -23,9 +23,7 @@ export const SizePicker = ({
   ];
 
   const options =
-    method === "replace"
-      ? (sizeOptions ?? defaultSizeOptions)
-      : [...defaultSizeOptions, ...(sizeOptions ?? [])];
+    method === "replace" ? (sizes ?? defaultSizeOptions) : [...defaultSizeOptions, ...(sizes ?? [])];
 
   const units = ["px", "rem", "em", "vh", "vw", "%"];
 

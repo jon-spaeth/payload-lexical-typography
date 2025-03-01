@@ -25,7 +25,7 @@ To get plugin up and running, follow these steps:
 
    ```ts
    import { lexicalEditor } from "@payloadcms/richtext-lexical";
-   import { TextColorFeature } from "payload-lexical-typography";
+   import { TextColorFeature, TextSizeFeature } from "payload-lexical-typography";
 
    lexicalEditor({
      features: () => {
@@ -33,6 +33,7 @@ To get plugin up and running, follow these steps:
          TextColorFeature({
            colors: ["#FFFFFF", "#000000", "#FF0000", "#00FF00", "#0000FF"],
          }),
+         TextSizeFeature(),
        ];
      },
    });
@@ -40,10 +41,12 @@ To get plugin up and running, follow these steps:
 
 3. **Add converters to your RichText component**
 
+   ⚠️ Warning: Starting from version **0.1.0**, converters **must** be imported from the `/converters` submodule instead of `/client`.
+
    ### JSX Converters
 
    ```tsx
-   import { TypographyJSXConverters } from "payload-lexical-typography/client";
+   import { TypographyJSXConverters } from "payload-lexical-typography/converters";
 
    const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
      ...defaultConverters,
@@ -51,17 +54,19 @@ To get plugin up and running, follow these steps:
    });
    ```
 
-   ℹ️ Note: Converters has to imported from `/client` submodule.
-
    ### HTML Converters
 
-   For HTML converter, use `TypographyHTMLConverters` instead of `TypographyJSXConverters`, from `/client` submodule.
+   For HTML converter, use `TypographyHTMLConverters` instead of `TypographyJSXConverters`, from `/converters` submodule.
 
 ## Configuration 🛠
 
 ### TextColorFeature
 
 - **colors** - Array of colors that will be available in the color picker predefined section.
+
+### TextSizeFeature
+
+- **sizes** - Array of font sizes that will be available in the font size dropdown as preset values.
 
 ## License 📜
 

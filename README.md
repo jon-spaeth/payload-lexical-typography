@@ -5,7 +5,7 @@ This plugin extends the default Payload Lexical editor functionality by adding m
 ## Core Features 🧩
 
 - **Text color** - ability to change text color to predefined colors or selected color using color picker.
-- **Font size** (coming very soon)
+- **Font size** - ability to change font size to predefined sizes or custom size using input field.
 - **Font family** (coming soon)
 - **Line height** (coming soon)
 
@@ -62,11 +62,66 @@ To get plugin up and running, follow these steps:
 
 ### TextColorFeature
 
-- **colors** - Array of colors that will be available in the color picker predefined section.
+<table style="width: 100%">
+  <tr>
+    <th style="width: 15%">Option</th>
+    <th style="width: 25%">Type</th>
+    <th style="width: 25%">Default</th>
+    <th style="width: 40%">Description</th>
+  </tr>
+  <tr>
+    <td><code>colors</code></td>
+    <td><code>Array&lt;string&gt;</code></td>
+    <td><code>[]</code></td>
+    <td>Defines the color palette available in the color picker's predefined section. Each color should be a valid CSS color value (hex, RGB, etc.).</td>
+  </tr>
+</table>
 
 ### TextSizeFeature
 
-- **sizes** - Array of font sizes that will be available in the font size dropdown as preset values.
+<table style="width: 100%">
+  <tr>
+    <th style="width: 15%">Option</th>
+    <th style="width: 25%">Type</th>
+    <th style="width: 25%">Default</th>
+    <th style="width: 40%">Description</th>
+  </tr>
+  <tr>
+    <td><code>sizes</code></td>
+    <td><code>Array&lt;{value: string, label: string}&gt;</code></td>
+    <td><code>[]</code></td>
+    <td>Specifies the font size presets available in the size picker. Each size needs both a display label and CSS value.</td>
+  </tr>
+  <tr>
+    <td><code>method</code></td>
+    <td><code>"replace" | "combine"</code></td>
+    <td><code>"replace"</code></td>
+    <td>Determines whether custom sizes replace the defaults (<code>"replace"</code>) or are added to them (<code>"combine"</code>).</td>
+  </tr>
+  <tr>
+    <td><code>scroll</code></td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+    <td>If <code>true</code>, sizes over the first 4 will be accessible via scrolling within a fixed container height. If <code>false</code>, the picker will expand vertically to accommodate all size options.</td>
+  </tr>
+</table>
+
+### Shared Options
+
+<table style="width: 100%">
+  <tr>
+    <th style="width: 15%">Option</th>
+    <th style="width: 25%">Type</th>
+    <th style="width: 25%">Default</th>
+    <th style="width: 40%">Description</th>
+  </tr>
+  <tr>
+    <td><code>hideAttribution</code></td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+    <td>Controls visibility of attribution. <strong>If using in commercial products or for profit</strong>, consider <a href="#support-the-project">supporting the author</a> or keeping the attribution.</td>
+  </tr>
+</table>
 
 ## License 📜
 
@@ -80,6 +135,6 @@ If you have any ideas on how this plugin can be improved, please feel free to op
 
 If you have any questions, feel free to reach out to me at [adrianmaj1122@gmail.com](mailto:adrianmaj1122@gmail.com), or on my Linkedin profile [Adrian Maj](https://www.linkedin.com/in/adrianmaj/).
 
-## Support the Project ❤️
+## Support the Project
 
 If you find this plugin useful, you can support the project by giving it a ⭐️, or [buying me a coffee ☕️](https://buymeacoffee.com/adrianmaj), for motivation to keep working on it. Thanks for your support!

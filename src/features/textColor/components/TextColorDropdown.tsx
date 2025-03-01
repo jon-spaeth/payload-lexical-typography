@@ -21,5 +21,12 @@ export const TextColorDropdown = ({ editor, item }: { editor: LexicalEditor; ite
     });
   }, [editor, item]);
 
-  return <TextColorPicker color={activeColor} onChange={onChange} {...item} />;
+  return (
+    <TextColorPicker
+      color={activeColor}
+      onChange={onChange}
+      colors={item.colors}
+      hideAttribution={item.hideAttribution}
+    />
+  );
 };

@@ -45,11 +45,10 @@ export const SizePicker = ({
 
   useEffect(() => {
     if (!size) {
-      setSelectedValue("1.25rem");
-      setIsCustomMode(false);
-      const { number, unit } = parseSizeValue("1.25rem");
-      setCustomNumberValue(number);
-      setCustomUnit(unit);
+      setSelectedValue("");
+      setIsCustomMode(true);
+      setCustomNumberValue("");
+      setCustomUnit("px");
       return;
     }
 
@@ -173,7 +172,7 @@ export const SizePicker = ({
             style={{
               paddingLeft: "4px",
               paddingRight: "4px",
-              width: "50px",
+              width: "56px",
               boxShadow: "0 2px 2px -1px #0000001a",
               fontFamily: "var(--font-body)",
               border: "1px solid var(--theme-elevation-150)",
@@ -187,6 +186,7 @@ export const SizePicker = ({
               transitionDuration: ".1s, .1s, .5s",
               transitionTimingFunction: "cubic-bezier(0,.2,.2,1)",
               borderLeft: "0",
+              transform: "translateX(-1px)",
               borderTopLeftRadius: "0",
               borderBottomLeftRadius: "0",
             }}
@@ -203,7 +203,7 @@ export const SizePicker = ({
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          handleSizeSelect("1.25rem");
+          onChange("");
         }}
         className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
         style={{ marginLeft: "auto", margin: "0", cursor: "pointer" }}

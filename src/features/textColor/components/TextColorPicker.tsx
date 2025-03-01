@@ -15,14 +15,16 @@ const injectStyles = () => {
   document.head.appendChild(style);
 };
 
-export const ColorPicker = ({
+export const TextColorPicker = ({
   color,
   onChange,
-  colors,
+  colors = [],
+  hideAttribution = false,
 }: {
   color: string;
   onChange: (color: string) => void;
-  colors: string[];
+  colors?: string[];
+  hideAttribution?: boolean;
 }) => {
   const [predefinedColors, setPredefinedColors] = useState(true);
 
@@ -157,19 +159,21 @@ export const ColorPicker = ({
             margin: 0,
           }}
         >
-          Switch to {predefinedColors ? "picker" : "predefined"}
+          {predefinedColors ? "Color picker" : "Predefined colors"}
         </button>
-        <p
-          style={{
-            color: "var(--theme-elevation-650)",
-            fontSize: "10px",
-          }}
-        >
-          Made with ❤️ by{" "}
-          <a target="_blank" href="https://github.com/AdrianMaj">
-            @AdrianMaj
-          </a>
-        </p>
+        {!hideAttribution && (
+          <p
+            style={{
+              color: "var(--theme-elevation-650)",
+              fontSize: "10px",
+            }}
+          >
+            Made with ❤️ by{" "}
+            <a target="_blank" href="https://github.com/AdrianMaj">
+              @AdrianMaj
+            </a>
+          </p>
+        )}
       </div>
     </div>
   );

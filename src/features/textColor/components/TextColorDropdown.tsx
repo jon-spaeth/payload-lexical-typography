@@ -2,11 +2,11 @@ import { type LexicalEditor } from "@payloadcms/richtext-lexical/lexical";
 
 import { useEffect, useState } from "react";
 
-import { ColorPicker } from "./ColorPicker";
+import { TextColorPicker } from "./TextColorPicker";
 
 import { type TextColorItem } from "../feature.client";
 
-export const Dropdown = ({ editor, item }: { editor: LexicalEditor; item: TextColorItem }) => {
+export const TextColorDropdown = ({ editor, item }: { editor: LexicalEditor; item: TextColorItem }) => {
   const [activeColor, setActiveColor] = useState<string>("");
 
   const onChange = (color: string) => {
@@ -21,5 +21,5 @@ export const Dropdown = ({ editor, item }: { editor: LexicalEditor; item: TextCo
     });
   }, [editor, item]);
 
-  return <ColorPicker color={activeColor} onChange={onChange} colors={item.colors ?? []} />;
+  return <TextColorPicker color={activeColor} onChange={onChange} {...item} />;
 };

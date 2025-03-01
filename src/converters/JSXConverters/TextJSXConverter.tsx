@@ -7,8 +7,11 @@ export const TextJSXConverter: JSXConverters<SerializedTextNode> = {
     const styles: React.CSSProperties = {};
 
     if (node.style) {
-      const match = /(?:^|;)\s?color: ([^;]+)/.exec(node.style);
+      let match = /(?:^|;)\s?color: ([^;]+)/.exec(node.style);
       if (match) styles.color = match[1];
+
+      match = /(?:^|;)\s?font-size: ([^;]+)/.exec(node.style);
+      if (match) styles.fontSize = match[1];
     }
 
     const formatters: Record<number, (element: React.ReactElement) => React.ReactElement> = {

@@ -159,7 +159,7 @@ export const TextColorPicker = ({
             margin: 0,
           }}
         >
-          Switch to {predefinedColors ? "picker" : "predefined"}
+          {predefinedColors ? "Color picker" : "Predefined colors"}
         </button>
         {!hideAttribution && (
           <p

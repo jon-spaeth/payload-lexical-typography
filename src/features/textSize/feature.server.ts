@@ -14,6 +14,7 @@ export const TextSizeFeature = createServerFeature<
         hideAttribution: props?.hideAttribution,
         sizeOptions: props?.sizeOptions,
         method: props?.method,
+        scroll: props?.scroll,
       },
     };
   },

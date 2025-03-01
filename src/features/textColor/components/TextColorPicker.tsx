@@ -18,12 +18,12 @@ const injectStyles = () => {
 export const TextColorPicker = ({
   color,
   onChange,
-  colors,
+  colors = [],
   hideAttribution = false,
 }: {
   color: string;
   onChange: (color: string) => void;
-  colors: string[];
+  colors?: string[];
   hideAttribution?: boolean;
 }) => {
   const [predefinedColors, setPredefinedColors] = useState(true);

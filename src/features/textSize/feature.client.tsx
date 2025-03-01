@@ -21,6 +21,7 @@ export type TextSizeFeatureProps = {
   hideAttribution?: boolean;
   sizeOptions?: { value: string; label: string }[];
   method?: "replace" | "combine";
+  scroll?: boolean;
 };
 
 export type TextSizeItem = ToolbarGroupItem & {
@@ -48,6 +49,9 @@ export const TextSizeClientFeature = createClientFeature<TextSizeFeatureProps, T
                 return selection ? $getSelectionStyleValueForProperty(selection, "font-size", "") : null;
               },
               hideAttribution: props?.hideAttribution,
+              sizeOptions: props?.sizeOptions,
+              method: props?.method,
+              scroll: props?.scroll,
               key: "textSize",
             },
           });

@@ -6,12 +6,14 @@ export const SizePicker = ({
   hideAttribution,
   sizeOptions,
   method = "replace",
+  scroll = true,
 }: {
   size: string;
   onChange: (size: string) => void;
   hideAttribution?: boolean;
   sizeOptions?: { value: string; label: string }[];
   method?: "replace" | "combine";
+  scroll?: boolean;
 }) => {
   const defaultSizeOptions = [
     { value: "0.875rem", label: "Small" },
@@ -27,7 +29,7 @@ export const SizePicker = ({
 
   const units = ["px", "rem", "em", "vh", "vw", "%"];
 
-  const [selectedValue, setSelectedValue] = useState(size || "1.25rem");
+  const [selectedValue, setSelectedValue] = useState(size || "");
 
   const [isCustomMode, setIsCustomMode] = useState(false);
 
@@ -101,8 +103,9 @@ export const SizePicker = ({
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
           gap: "12px",
-          maxHeight: "120px",
-          overflowY: options.length > 4 ? "auto" : "visible",
+          maxHeight: scroll && options.length > 4 ? "64px" : "none",
+          overflowY: scroll && options.length > 4 ? "auto" : "visible",
+          paddingRight: scroll && options.length > 4 ? "8px" : "0",
         }}
       >
         {options.map((option) => (
@@ -189,6 +192,7 @@ export const SizePicker = ({
               transform: "translateX(-1px)",
               borderTopLeftRadius: "0",
               borderBottomLeftRadius: "0",
+              outline: "none",
             }}
           >
             {units.map((unit) => (

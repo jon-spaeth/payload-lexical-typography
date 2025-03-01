@@ -21,5 +21,5 @@ export const Dropdown = ({ editor, item }: { editor: LexicalEditor; item: TextSi
     });
   }, [editor, item]);
 
-  return <SizePicker size={activeSize} onChange={onChange} hideAttribution={item.hideAttribution} />;
+  return <SizePicker size={activeSize} onChange={onChange} {...item} />;
 };

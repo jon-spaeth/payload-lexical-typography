@@ -15,6 +15,11 @@
       "types": "./dist/client.d.ts",
       "import": "./dist/client.mjs",
       "require": "./dist/client.cjs"
+    },
+    "./converters": {
+      "types": "./dist/converters.d.ts",
+      "import": "./dist/converters.mjs",
+      "require": "./dist/converters.cjs"
     }
   },
   "files": [
@@ -53,12 +58,14 @@
     "prettier": "3.5.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "@payloadcms/ui": "^3.24.0",
     "tsup": "^8.3.6",
     "tsx": "^4.19.3",
     "typescript": "^5.7.3"
   },
   "peerDependencies": {
     "@payloadcms/richtext-lexical": "^3.24.0",
+    "@payloadcms/ui": "^3.24.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

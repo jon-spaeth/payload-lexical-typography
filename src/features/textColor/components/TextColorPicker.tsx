@@ -19,7 +19,7 @@ export const TextColorPicker = ({
   color,
   onChange,
   colors,
-  hideAttribution,
+  hideAttribution = false,
 }: {
   color: string;
   onChange: (color: string) => void;

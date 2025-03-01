@@ -19,13 +19,14 @@ import { getSelection } from "../../utils/getSelection";
 
 export type TextSizeFeatureProps = {
   hideAttribution?: boolean;
+  sizeOptions?: { value: string; label: string }[];
+  method?: "replace" | "combine";
 };
 
 export type TextSizeItem = ToolbarGroupItem & {
   command: Record<string, unknown>;
   current: () => string | null;
-  hideAttribution?: boolean;
-};
+} & TextSizeFeatureProps;
 
 export const TextSizeClientFeature = createClientFeature<TextSizeFeatureProps, TextSizeItem>(({ props }) => {
   const DropdownComponent: ToolbarGroup = {

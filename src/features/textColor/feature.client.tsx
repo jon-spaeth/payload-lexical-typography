@@ -25,9 +25,7 @@ export type TextColorFeatureProps = {
 export type TextColorItem = ToolbarGroupItem & {
   command: Record<string, unknown>;
   current: () => string | null;
-  colors?: string[];
-  hideAttribution?: boolean;
-};
+} & TextColorFeatureProps;
 
 export const TextColorClientFeature = createClientFeature<TextColorFeatureProps, TextColorItem>(
   ({ props }) => {

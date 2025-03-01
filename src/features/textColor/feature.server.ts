@@ -12,7 +12,7 @@ export const TextColorFeature = createServerFeature<
       ClientFeature: "payload-lexical-typography/client#TextColorClientFeature",
       clientFeatureProps: {
         colors: props?.colors ?? [],
-        hideAttribution: props.hideAttribution,
+        hideAttribution: props?.hideAttribution ?? false,
       },
     };
   },

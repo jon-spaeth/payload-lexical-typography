@@ -104,6 +104,12 @@ To get plugin up and running, follow these steps:
     <td><code>true</code></td>
     <td>If <code>true</code>, sizes over the first 4 will be accessible via scrolling within a fixed container height. If <code>false</code>, the picker will expand vertically to accommodate all size options.</td>
   </tr>
+  <tr>
+    <td><code>customSize</code></td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+    <td>By setting this to <code>false</code>, you hide the custom size input field, limiting users to selecting only from the predefined size options.</td>
+  </tr>
 </table>
 
 ### Shared Options

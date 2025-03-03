@@ -29,6 +29,7 @@ export const Dropdown = ({ editor, item }: { editor: LexicalEditor; item: TextSi
       method={item.method}
       scroll={item.scroll}
       sizes={item.sizes}
+      customSize={item.customSize}
     />
   );
 };

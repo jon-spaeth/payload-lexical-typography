@@ -1,9 +1,16 @@
 import { type HTMLConverter } from "@payloadcms/richtext-lexical";
-import { NodeFormat } from "@payloadcms/richtext-lexical/client";
+import {
+  IS_BOLD,
+  IS_ITALIC,
+  IS_STRIKETHROUGH,
+  IS_UNDERLINE,
+  IS_CODE,
+  IS_SUBSCRIPT,
+  IS_SUPERSCRIPT,
+  type SerializedTextNode,
+} from "@payloadcms/richtext-lexical/lexical";
 
 import escapeHTML from "escape-html";
-
-import type { SerializedTextNode } from "@payloadcms/richtext-lexical/lexical";
 
 export const TextHTMLConverter: HTMLConverter<SerializedTextNode> = {
   converter({ node }) {
@@ -29,23 +36,23 @@ export const TextHTMLConverter: HTMLConverter<SerializedTextNode> = {
     }
 
     const formatters: Record<number, (content: string, styleAttribute: string) => string> = {
-      [NodeFormat.IS_BOLD]: (content, attr) => `<strong${attr}>${content}</strong>`,
-      [NodeFormat.IS_ITALIC]: (content, attr) => `<em${attr}>${content}</em>`,
-      [NodeFormat.IS_STRIKETHROUGH]: (content) => {
+      [IS_BOLD]: (content, attr) => `<strong${attr}>${content}</strong>`,
+      [IS_ITALIC]: (content, attr) => `<em${attr}>${content}</em>`,
+      [IS_STRIKETHROUGH]: (content) => {
         const strikeStyles = styles
           ? `text-decoration: line-through; ${styles}`
           : "text-decoration: line-through";
         return `<span style="${strikeStyles}">${content}</span>`;
       },
-      [NodeFormat.IS_UNDERLINE]: (content) => {
+      [IS_UNDERLINE]: (content) => {
         const underlineStyles = styles
           ? `text-decoration: underline; ${styles}`
           : "text-decoration: underline";
         return `<span style="${underlineStyles}">${content}</span>`;
       },
-      [NodeFormat.IS_CODE]: (content, attr) => `<code${attr}>${content}</code>`,
-      [NodeFormat.IS_SUBSCRIPT]: (content, attr) => `<sub${attr}>${content}</sub>`,
-      [NodeFormat.IS_SUPERSCRIPT]: (content, attr) => `<sup${attr}>${content}</sup>`,
+      [IS_CODE]: (content, attr) => `<code${attr}>${content}</code>`,
+      [IS_SUBSCRIPT]: (content, attr) => `<sub${attr}>${content}</sub>`,
+      [IS_SUPERSCRIPT]: (content, attr) => `<sup${attr}>${content}</sup>`,
     };
 
     html = styles ? `<span${styleAttr}>${html}</span>` : html;

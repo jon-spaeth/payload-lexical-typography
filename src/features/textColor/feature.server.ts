@@ -13,7 +13,7 @@ export const TextColorFeature = createServerFeature<
       clientFeatureProps: {
         colors: props?.colors ?? [],
         hideAttribution: props?.hideAttribution ?? false,
-        listView: props.listView,
+        listView: props?.listView,
       },
     };
   },

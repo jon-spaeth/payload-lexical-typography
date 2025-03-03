@@ -18,8 +18,9 @@ import { TextColorIcon } from "./components/TextColorIcon";
 import { getSelection } from "../../utils/getSelection";
 
 export type TextColorFeatureProps = {
-  colors?: string[];
+  colors?: string[] | { value: string; label: string }[];
   hideAttribution?: boolean;
+  listView?: boolean;
 };
 
 export type TextColorItem = ToolbarGroupItem & {
@@ -53,6 +54,7 @@ export const TextColorClientFeature = createClientFeature<TextColorFeatureProps,
                   return selection ? $getSelectionStyleValueForProperty(selection, "color", "") : null;
                 },
                 colors,
+                listView: props?.listView,
                 hideAttribution: props?.hideAttribution,
                 key: "textColor",
               },

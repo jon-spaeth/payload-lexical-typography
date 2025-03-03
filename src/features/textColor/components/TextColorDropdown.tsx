@@ -27,6 +27,7 @@ export const TextColorDropdown = ({ editor, item }: { editor: LexicalEditor; ite
       onChange={onChange}
       colors={item.colors}
       hideAttribution={item.hideAttribution}
+      listView={item.listView}
     />
   );
 };

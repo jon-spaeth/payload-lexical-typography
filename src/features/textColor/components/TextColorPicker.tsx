@@ -22,6 +22,7 @@ export const TextColorPicker = ({
   onChange,
   colors = [],
   hideAttribution = false,
+  listView,
 }: {
   color: string;
   onChange: (color: string) => void;
@@ -31,6 +32,8 @@ export const TextColorPicker = ({
   useEffect(() => {
     injectStyles();
   }, []);
+
+  const isGridView = listView === false || (listView !== true && typeof colors[0] === "string");
 
   return (
     <div
@@ -44,51 +47,77 @@ export const TextColorPicker = ({
       {predefinedColors ? (
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gap: "4px",
+            display: isGridView ? "grid" : "flex",
+            gridTemplateColumns: isGridView ? "repeat(5, 1fr)" : undefined,
+            flexDirection: isGridView ? undefined : "column",
+            gap: isGridView ? "4px" : "6px",
             padding: "8px",
+            overflowY: isGridView ? undefined : "auto",
+            maxHeight: isGridView ? undefined : "266px",
           }}
         >
-          {colors.map((c) => (
-            <div
-              key={c}
-              onClick={() => onChange(c)}
-              style={{
-                backgroundColor: c,
-                width: "26px",
-                height: "26px",
-                borderRadius: "50%",
-                border:
-                  color === c
-                    ? "2px solid var(--theme-elevation-900)"
-                    : "2px solid var(--theme-elevation-150)",
-                cursor: "pointer",
-              }}
-            />
-          ))}
+          {colors.map((unionC) => {
+            const c = typeof unionC === "string" ? unionC : unionC.value;
+            return (
+              <div
+                key={c}
+                onClick={() => onChange(c)}
+                style={{
+                  display: "flex",
+                  gap: isGridView ? "4px" : "6px",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <div
+                  style={{
+                    backgroundColor: c,
+                    width: "26px",
+                    height: "26px",
+                    borderRadius: "50%",
+                    border:
+                      color === c
+                        ? "2px solid var(--theme-elevation-900)"
+                        : "2px solid var(--theme-elevation-150)",
+                  }}
+                />
+                {!isGridView && <span>{typeof unionC === "string" ? unionC : unionC.label}</span>}
+              </div>
+            );
+          })}
           <div
             onClick={() => onChange("")}
             style={{
-              width: "26px",
-              height: "26px",
-              borderRadius: "50%",
-              border: "2px solid var(--theme-elevation-150)",
-              position: "relative",
+              display: "flex",
+              gap: isGridView ? "4px" : "6px",
+              alignItems: "center",
               cursor: "pointer",
             }}
           >
             <div
+              onClick={() => onChange("")}
               style={{
-                position: "absolute",
-                width: "100%",
-                height: "2px",
-                backgroundColor: "#FF0000",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%,-50%) rotate(45deg)",
+                width: "26px",
+                height: "26px",
+                borderRadius: "50%",
+                border: "2px solid var(--theme-elevation-150)",
+                position: "relative",
+                cursor: "pointer",
               }}
-            />
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  width: "100%",
+                  height: "2px",
+                  backgroundColor: "#FF0000",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%,-50%) rotate(45deg)",
+                }}
+              />
+            </div>
+            {!isGridView && <span>Reset</span>}
           </div>
         </div>
       ) : (

@@ -71,9 +71,15 @@ To get plugin up and running, follow these steps:
   </tr>
   <tr>
     <td><code>colors</code></td>
-    <td><code>Array&lt;string&gt;</code></td>
+    <td><code>Array&lt;string&gt; | Array<{value: string, label: string}></code></td>
     <td><code>[]</code></td>
-    <td>Defines the color palette available in the color picker's predefined section. Each color should be a valid CSS color value (hex, RGB, etc.).</td>
+    <td>Defines the color palette available in the color picker's predefined section. Each color should be a valid CSS color value (hex, RGB, etc.). If you pass values with label, it will automatically switch to list view instead.</td>
+  </tr>
+  <tr>
+    <td><code>listView</code></td>
+    <td><code>boolean</code></td>
+    <td><code>undefined</code></td>
+    <td>Allows you to manually switch from list to grid view and vice versa. It has higher priority than colors array type.</td>
   </tr>
 </table>
 

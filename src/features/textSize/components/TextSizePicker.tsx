@@ -14,7 +14,6 @@ export const SizePicker = ({
   size: string;
   onChange: (size: string) => void;
 } & TextSizeFeatureProps) => {
-  // Create a ref to track if we're in the middle of editing
   const isEditingRef = useRef(false);
 
   const defaultSizeOptions = [
@@ -29,9 +28,7 @@ export const SizePicker = ({
 
   const units = ["px", "rem", "em", "vh", "vw", "%"];
 
-  // For tracking what's displayed (doesn't trigger parent update)
   const [displayValue, setDisplayValue] = useState(size || "");
-  // For tracking what's actually been applied
   const [appliedValue, setAppliedValue] = useState(size || "");
 
   const [isCustomMode, setIsCustomMode] = useState(false);
@@ -47,9 +44,8 @@ export const SizePicker = ({
     };
   };
 
-  // Update internal state when the parent prop changes
   useEffect(() => {
-    if (isEditingRef.current) return; // Skip if we're currently editing
+    if (isEditingRef.current) return;
 
     if (!size) {
       setDisplayValue("");

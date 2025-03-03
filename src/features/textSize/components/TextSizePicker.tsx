@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import { type TextSizeFeatureProps } from "../feature.client";
+
 export const SizePicker = ({
   size,
   onChange,
@@ -7,14 +9,11 @@ export const SizePicker = ({
   sizes,
   method = "replace",
   scroll = true,
+  customSize = true,
 }: {
   size: string;
   onChange: (size: string) => void;
-  hideAttribution?: boolean;
-  sizes?: { value: string; label: string }[];
-  method?: "replace" | "combine";
-  scroll?: boolean;
-}) => {
+} & TextSizeFeatureProps) => {
   const defaultSizeOptions = [
     { value: "0.875rem", label: "Small" },
     { value: "1.25rem", label: "Normal" },
@@ -106,9 +105,9 @@ export const SizePicker = ({
           paddingRight: scroll && options.length > 4 ? "8px" : "0",
         }}
       >
-        {options.map((option) => (
+        {options.map((option, index) => (
           <button
-            key={option.value}
+            key={`${option.value}-${index}`}
             className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
             style={{
               cursor: "pointer",
@@ -129,78 +128,80 @@ export const SizePicker = ({
         ))}
       </div>
 
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <div style={{ marginRight: "8px" }}>Custom: </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            width: "140px",
-          }}
-        >
-          <div className="field-type number" style={{ flex: 1 }}>
-            <input
-              style={{
-                width: "100%",
-                margin: "8px 0",
-                borderRight: "0",
-                height: "25px",
-                borderTopRightRadius: "0",
-                borderBottomRightRadius: "0",
-                paddingTop: "0",
-                paddingBottom: "1px",
-                paddingLeft: "4px",
-                paddingRight: "4px",
-              }}
-              type="number"
-              min={1}
-              max={999}
-              value={customNumberValue}
-              onChange={(e) => {
-                e.stopPropagation();
-                handleCustomNumberChange(e.target.value);
-              }}
-              onClick={(e) => e.stopPropagation()}
-            />
-          </div>
-          <select
-            value={customUnit}
-            onChange={(e) => {
-              e.stopPropagation();
-              handleCustomUnitChange(e.target.value);
-            }}
-            onClick={(e) => e.stopPropagation()}
+      {customSize && (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ marginRight: "8px" }}>Custom: </div>
+          <div
             style={{
-              paddingLeft: "4px",
-              paddingRight: "4px",
-              width: "56px",
-              boxShadow: "0 2px 2px -1px #0000001a",
-              fontFamily: "var(--font-body)",
-              border: "1px solid var(--theme-elevation-150)",
-              borderRadius: "var(--style-radius-s)",
-              background: "var(--theme-input-bg)",
-              color: "var(--theme-elevation-800)",
-              fontSize: "1rem",
-              height: "25px",
-              lineHeight: "20px",
-              transitionProperty: "border, box-shadow, background-color",
-              transitionDuration: ".1s, .1s, .5s",
-              transitionTimingFunction: "cubic-bezier(0,.2,.2,1)",
-              borderLeft: "0",
-              transform: "translateX(-1px)",
-              borderTopLeftRadius: "0",
-              borderBottomLeftRadius: "0",
-              outline: "none",
+              display: "flex",
+              alignItems: "center",
+              width: "140px",
             }}
           >
-            {units.map((unit) => (
-              <option key={unit} value={unit}>
-                {unit}
-              </option>
-            ))}
-          </select>
+            <div className="field-type number" style={{ flex: 1 }}>
+              <input
+                style={{
+                  width: "100%",
+                  margin: "8px 0",
+                  borderRight: "0",
+                  height: "25px",
+                  borderTopRightRadius: "0",
+                  borderBottomRightRadius: "0",
+                  paddingTop: "0",
+                  paddingBottom: "1px",
+                  paddingLeft: "4px",
+                  paddingRight: "4px",
+                }}
+                type="number"
+                min={1}
+                max={999}
+                value={customNumberValue}
+                onChange={(e) => {
+                  e.stopPropagation();
+                  handleCustomNumberChange(e.target.value);
+                }}
+                onClick={(e) => e.stopPropagation()}
+              />
+            </div>
+            <select
+              value={customUnit}
+              onChange={(e) => {
+                e.stopPropagation();
+                handleCustomUnitChange(e.target.value);
+              }}
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                paddingLeft: "4px",
+                paddingRight: "4px",
+                width: "56px",
+                boxShadow: "0 2px 2px -1px #0000001a",
+                fontFamily: "var(--font-body)",
+                border: "1px solid var(--theme-elevation-150)",
+                borderRadius: "var(--style-radius-s)",
+                background: "var(--theme-input-bg)",
+                color: "var(--theme-elevation-800)",
+                fontSize: "1rem",
+                height: "25px",
+                lineHeight: "20px",
+                transitionProperty: "border, box-shadow, background-color",
+                transitionDuration: ".1s, .1s, .5s",
+                transitionTimingFunction: "cubic-bezier(0,.2,.2,1)",
+                borderLeft: "0",
+                transform: "translateX(-1px)",
+                borderTopLeftRadius: "0",
+                borderBottomLeftRadius: "0",
+                outline: "none",
+              }}
+            >
+              {units.map((unit, index) => (
+                <option key={`${unit}-${index}`} value={unit}>
+                  {unit}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-      </div>
+      )}
       <button
         onClick={(e) => {
           e.preventDefault();

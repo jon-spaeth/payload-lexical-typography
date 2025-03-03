@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 
+import { type TextColorFeatureProps } from "../feature.client";
+
 const injectStyles = () => {
   const style = document.createElement("style");
   style.innerHTML = `
@@ -23,9 +25,7 @@ export const TextColorPicker = ({
 }: {
   color: string;
   onChange: (color: string) => void;
-  colors?: string[];
-  hideAttribution?: boolean;
-}) => {
+} & TextColorFeatureProps) => {
   const [predefinedColors, setPredefinedColors] = useState(true);
 
   useEffect(() => {

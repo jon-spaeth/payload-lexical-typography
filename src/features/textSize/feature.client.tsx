@@ -21,6 +21,7 @@ export type TextSizeFeatureProps = {
   hideAttribution?: boolean;
   sizes?: { value: string; label: string }[];
   method?: "replace" | "combine";
+  customSize?: boolean;
   scroll?: boolean;
 };
 
@@ -52,6 +53,7 @@ export const TextSizeClientFeature = createClientFeature<TextSizeFeatureProps, T
               sizes: props?.sizes,
               method: props?.method,
               scroll: props?.scroll,
+              customSize: props?.customSize,
               key: "textSize",
             },
           });

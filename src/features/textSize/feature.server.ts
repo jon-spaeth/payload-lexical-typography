@@ -15,6 +15,7 @@ export const TextSizeFeature = createServerFeature<
         sizes: props?.sizes,
         method: props?.method,
         scroll: props?.scroll,
+        customSize: props?.customSize,
       },
     };
   },

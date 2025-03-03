@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, type ChangeEvent } from "react";
 
 import { type TextSizeFeatureProps } from "../feature.client";
 
@@ -14,6 +14,9 @@ export const SizePicker = ({
   size: string;
   onChange: (size: string) => void;
 } & TextSizeFeatureProps) => {
+  // Create a ref to track if we're in the middle of editing
+  const isEditingRef = useRef(false);
+
   const defaultSizeOptions = [
     { value: "0.875rem", label: "Small" },
     { value: "1.25rem", label: "Normal" },
@@ -26,10 +29,12 @@ export const SizePicker = ({
 
   const units = ["px", "rem", "em", "vh", "vw", "%"];
 
-  const [selectedValue, setSelectedValue] = useState(size || "");
+  // For tracking what's displayed (doesn't trigger parent update)
+  const [displayValue, setDisplayValue] = useState(size || "");
+  // For tracking what's actually been applied
+  const [appliedValue, setAppliedValue] = useState(size || "");
 
   const [isCustomMode, setIsCustomMode] = useState(false);
-
   const [customNumberValue, setCustomNumberValue] = useState("");
   const [customUnit, setCustomUnit] = useState("px");
 
@@ -42,16 +47,21 @@ export const SizePicker = ({
     };
   };
 
+  // Update internal state when the parent prop changes
   useEffect(() => {
+    if (isEditingRef.current) return; // Skip if we're currently editing
+
     if (!size) {
-      setSelectedValue("");
+      setDisplayValue("");
+      setAppliedValue("");
       setIsCustomMode(true);
       setCustomNumberValue("");
       setCustomUnit("px");
       return;
     }
 
-    setSelectedValue(size);
+    setDisplayValue(size);
+    setAppliedValue(size);
     const { number, unit } = parseSizeValue(size);
     setCustomNumberValue(number);
     setCustomUnit(unit);
@@ -61,7 +71,8 @@ export const SizePicker = ({
   }, [size, options]);
 
   const handleSizeSelect = (value: string) => {
-    setSelectedValue(value);
+    setDisplayValue(value);
+    setAppliedValue(value);
     onChange(value);
     setIsCustomMode(false);
 
@@ -70,20 +81,47 @@ export const SizePicker = ({
     setCustomUnit(unit);
   };
 
-  const handleCustomNumberChange = (numValue: string) => {
+  const handleCustomNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    isEditingRef.current = true;
+
+    const numValue = e.target.value;
     setCustomNumberValue(numValue);
+
     const newValue = `${numValue}${customUnit}`;
-    setSelectedValue(newValue);
-    onChange(newValue);
+    setDisplayValue(newValue);
     setIsCustomMode(true);
   };
 
-  const handleCustomUnitChange = (unitValue: string) => {
+  const handleCustomUnitChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    isEditingRef.current = true;
+
+    const unitValue = e.target.value;
     setCustomUnit(unitValue);
+
     const newValue = `${customNumberValue}${unitValue}`;
-    setSelectedValue(newValue);
-    onChange(newValue);
+    setDisplayValue(newValue);
     setIsCustomMode(true);
+  };
+
+  const applyCustomSize = () => {
+    isEditingRef.current = false;
+    setAppliedValue(displayValue);
+    onChange(displayValue);
+  };
+
+  const handleReset = () => {
+    isEditingRef.current = false;
+    setDisplayValue("");
+    setAppliedValue("");
+    setCustomNumberValue("");
+    setCustomUnit("px");
+    onChange("");
   };
 
   return (
@@ -113,7 +151,7 @@ export const SizePicker = ({
               cursor: "pointer",
               margin: "0",
               border:
-                selectedValue === option.value && !isCustomMode
+                appliedValue === option.value && !isCustomMode
                   ? "1px solid var(--theme-elevation-900)"
                   : "1px solid transparent",
             }}
@@ -138,7 +176,13 @@ export const SizePicker = ({
               width: "140px",
             }}
           >
-            <div className="field-type number" style={{ flex: 1 }}>
+            <div
+              className="field-type number"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              style={{ flex: 1 }}
+            >
               <input
                 style={{
                   width: "100%",
@@ -156,19 +200,13 @@ export const SizePicker = ({
                 min={1}
                 max={999}
                 value={customNumberValue}
-                onChange={(e) => {
-                  e.stopPropagation();
-                  handleCustomNumberChange(e.target.value);
-                }}
+                onChange={handleCustomNumberChange}
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
             <select
               value={customUnit}
-              onChange={(e) => {
-                e.stopPropagation();
-                handleCustomUnitChange(e.target.value);
-              }}
+              onChange={handleCustomUnitChange}
               onClick={(e) => e.stopPropagation()}
               style={{
                 paddingLeft: "4px",
@@ -202,17 +240,32 @@ export const SizePicker = ({
           </div>
         </div>
       )}
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          onChange("");
-        }}
-        className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
-        style={{ marginLeft: "auto", margin: "0", cursor: "pointer" }}
-      >
-        Reset
-      </button>
+      <div style={{ display: "flex", gap: "8px" }}>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleReset();
+          }}
+          className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
+          style={{ marginLeft: "auto", margin: "0", cursor: "pointer", flex: 1 }}
+        >
+          Reset
+        </button>
+        {customSize && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              applyCustomSize();
+            }}
+            className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
+            style={{ marginLeft: "auto", margin: "0", cursor: "pointer", flex: 1 }}
+          >
+            Apply
+          </button>
+        )}
+      </div>
 
       {!hideAttribution && (
         <p

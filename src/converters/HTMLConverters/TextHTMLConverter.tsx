@@ -36,23 +36,17 @@ export const TextHTMLConverter: HTMLConverter<SerializedTextNode> = {
     }
 
     const formatters: Record<number, (content: string, styleAttribute: string) => string> = {
-      [IS_BOLD]: (content, attr) => `<strong${attr}>${content}</strong>`,
-      [IS_ITALIC]: (content, attr) => `<em${attr}>${content}</em>`,
+      [IS_BOLD]: (content) => `<strong>${content}</strong>`,
+      [IS_ITALIC]: (content) => `<em>${content}</em>`,
       [IS_STRIKETHROUGH]: (content) => {
-        const strikeStyles = styles
-          ? `text-decoration: line-through; ${styles}`
-          : "text-decoration: line-through";
-        return `<span style="${strikeStyles}">${content}</span>`;
+        return `<span style="text-decoration: line-through">${content}</span>`;
       },
       [IS_UNDERLINE]: (content) => {
-        const underlineStyles = styles
-          ? `text-decoration: underline; ${styles}`
-          : "text-decoration: underline";
-        return `<span style="${underlineStyles}">${content}</span>`;
+        return `<span style="text-decoration: underline">${content}</span>`;
       },
-      [IS_CODE]: (content, attr) => `<code${attr}>${content}</code>`,
-      [IS_SUBSCRIPT]: (content, attr) => `<sub${attr}>${content}</sub>`,
-      [IS_SUPERSCRIPT]: (content, attr) => `<sup${attr}>${content}</sup>`,
+      [IS_CODE]: (content) => `<code>${content}</code>`,
+      [IS_SUBSCRIPT]: (content) => `<sub>${content}</sub>`,
+      [IS_SUPERSCRIPT]: (content) => `<sup>${content}</sup>`,
     };
 
     html = styles ? `<span${styleAttr}>${html}</span>` : html;

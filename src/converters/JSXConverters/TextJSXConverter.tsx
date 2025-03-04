@@ -23,13 +23,13 @@ export const TextJSXConverter: JSXConverters<SerializedTextNode> = {
     }
 
     const formatters: Record<number, (element: React.ReactElement) => React.ReactElement> = {
-      [IS_BOLD]: (el) => <strong style={styles}>{el}</strong>,
-      [IS_ITALIC]: (el) => <em style={styles}>{el}</em>,
-      [IS_STRIKETHROUGH]: (el) => <span style={{ textDecoration: "line-through", ...styles }}>{el}</span>,
-      [IS_UNDERLINE]: (el) => <span style={{ textDecoration: "underline", ...styles }}>{el}</span>,
-      [IS_CODE]: (el) => <code style={styles}>{el}</code>,
-      [IS_SUBSCRIPT]: (el) => <sub style={styles}>{el}</sub>,
-      [IS_SUPERSCRIPT]: (el) => <sup style={styles}>{el}</sup>,
+      [IS_BOLD]: (el) => <strong>{el}</strong>,
+      [IS_ITALIC]: (el) => <em>{el}</em>,
+      [IS_STRIKETHROUGH]: (el) => <span style={{ textDecoration: "line-through" }}>{el}</span>,
+      [IS_UNDERLINE]: (el) => <span style={{ textDecoration: "underline" }}>{el}</span>,
+      [IS_CODE]: (el) => <code>{el}</code>,
+      [IS_SUBSCRIPT]: (el) => <sub>{el}</sub>,
+      [IS_SUPERSCRIPT]: (el) => <sup>{el}</sup>,
     };
 
     let textElement = <span style={styles}>{node.text}</span>;

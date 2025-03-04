@@ -11,6 +11,11 @@ export default defineConfig({
   tsconfig: "tsconfig.json",
   outDir: "dist",
   external: ["react", "react-dom", "@payloadcms/richtext-lexical"],
+  outExtension({ format }) {
+    return {
+      js: format === "cjs" ? ".cjs" : ".mjs",
+    };
+  },
   esbuildOptions(options) {
     options.external = ["react", "react-dom", "@payloadcms/richtext-lexical"];
   },

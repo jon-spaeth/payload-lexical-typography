@@ -135,12 +135,6 @@ To get plugin up and running, follow these steps:
     <td>Specifies the line height presets available in the line height picker. Each line height needs both a display label and CSS value.</td>
   </tr>
   <tr>
-    <td><code>method</code></td>
-    <td><code>"replace" | "combine"</code></td>
-    <td><code>"replace"</code></td>
-    <td>Determines whether custom line heights replace the defaults (<code>"replace"</code>) or are added to them (<code>"combine"</code>).</td>
-  </tr>
-  <tr>
     <td><code>scroll</code></td>
     <td><code>boolean</code></td>
     <td><code>true</code></td>

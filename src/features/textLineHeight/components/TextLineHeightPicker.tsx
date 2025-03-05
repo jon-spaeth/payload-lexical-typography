@@ -1,102 +1,197 @@
-import React, { type KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
+import { useState, useEffect, useRef, type ChangeEvent } from "react";
 
-import type { TextLineHeightItem } from "../feature.client";
+import type { TextLineHeightFeatureProps } from "../feature.client";
 
-export const TextLineHeightPicker: React.FC<{
+export const TextLineHeightPicker = ({
+  currentValue,
+  onChange,
+  item,
+}: {
+  currentValue: string;
   onChange: (lineHeight: string) => void;
-  currentValue: string | null;
-  item: TextLineHeightItem;
-}> = ({ onChange, currentValue, item }) => {
-  const [customLineHeight, setCustomLineHeight] = useState(currentValue ?? "");
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    setCustomLineHeight(currentValue ?? "");
-  }, [currentValue]);
-
-  const handleLineHeightSelect = useCallback(
-    (lineHeight: string) => {
-      onChange(lineHeight);
-    },
-    [onChange],
-  );
-
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        handleLineHeightSelect(customLineHeight);
-      }
-    },
-    [customLineHeight, handleLineHeightSelect],
-  );
+  item: TextLineHeightFeatureProps & { current?: () => string | null };
+}) => {
+  const isEditingRef = useRef(false);
 
   const defaultLineHeights = [
     { value: "1", label: "1" },
-    { value: "1.15", label: "1.15" },
     { value: "1.5", label: "1.5" },
     { value: "2", label: "2" },
     { value: "2.5", label: "2.5" },
   ];
 
-  const lineHeights = item.lineHeights ?? defaultLineHeights;
+  // Always replace defaults with provided lineHeights if they exist
+  const options = item.lineHeights ?? defaultLineHeights;
+
+  const [displayValue, setDisplayValue] = useState(currentValue || "");
+  const [appliedValue, setAppliedValue] = useState(currentValue || "");
+  const [customValue, setCustomValue] = useState(currentValue || "");
+
+  useEffect(() => {
+    if (isEditingRef.current) return;
+
+    if (!currentValue) {
+      setDisplayValue("");
+      setAppliedValue("");
+      setCustomValue("");
+      return;
+    }
+
+    setDisplayValue(currentValue);
+    setAppliedValue(currentValue);
+    setCustomValue(currentValue);
+  }, [currentValue]);
+
+  const handleLineHeightSelect = (value: string) => {
+    setDisplayValue(value);
+    setAppliedValue(value);
+    onChange(value);
+    setCustomValue(value);
+  };
+
+  const handleCustomChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    isEditingRef.current = true;
+    const newValue = e.target.value;
+    setCustomValue(newValue);
+    setDisplayValue(newValue);
+  };
+
+  const applyCustomLineHeight = () => {
+    isEditingRef.current = false;
+    setAppliedValue(displayValue);
+    onChange(displayValue);
+  };
+
+  const handleReset = () => {
+    isEditingRef.current = false;
+    setDisplayValue("");
+    setAppliedValue("");
+    setCustomValue("");
+    onChange("");
+  };
 
   return (
-    <div className="typography-line-height-palette">
+    <div
+      style={{
+        padding: "8px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "8px",
+      }}
+    >
       <div
-        className="typography-line-height-options"
         style={{
-          display: "flex",
-          flexDirection: "column",
-          maxHeight: "300px",
-          overflow: item.scroll ? "auto" : "visible",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "12px",
+          maxHeight: item.scroll && options.length > 4 ? "64px" : "none",
+          overflowY: item.scroll && options.length > 4 ? "auto" : "visible",
+          paddingRight: item.scroll && options.length > 4 ? "8px" : "0",
         }}
       >
-        {lineHeights.map((lineHeight) => (
+        {options.map((option, index) => (
           <button
-            key={lineHeight.value}
-            type="button"
-            className={`typography-line-height-option ${
-              currentValue === lineHeight.value ? "typography-line-height-option--active" : ""
-            }`}
+            key={`${option.value}-${index}`}
+            className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
             style={{
-              padding: "8px 12px",
-              textAlign: "left",
               cursor: "pointer",
-              border: "none",
-              background: "none",
-              width: "100%",
+              margin: "0",
+              border:
+                appliedValue === option.value
+                  ? "1px solid var(--theme-elevation-900)"
+                  : "1px solid transparent",
             }}
-            onClick={() => handleLineHeightSelect(lineHeight.value)}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              handleLineHeightSelect(option.value);
+            }}
           >
-            {lineHeight.label}
+            {option.label}
           </button>
         ))}
       </div>
-      {item.customLineHeight && (
-        <div style={{ padding: "8px", borderTop: "1px solid #e0e0e0" }}>
-          <input
-            ref={inputRef}
-            type="text"
-            value={customLineHeight}
-            onChange={(e) => setCustomLineHeight(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Custom line height"
-            style={{ width: "100%", padding: "4px" }}
-          />
-          <button
-            type="button"
-            onClick={() => handleLineHeightSelect(customLineHeight)}
+
+      {item.customLineHeight !== false && (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ marginRight: "8px" }}>Custom: </div>
+          <div
             style={{
-              marginTop: "4px",
-              padding: "4px 8px",
-              width: "100%",
-              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              width: "140px",
             }}
+          >
+            <div
+              className="field-type text"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              style={{ flex: 1 }}
+            >
+              <input
+                style={{
+                  width: "100%",
+                  margin: "8px 0",
+                  height: "25px",
+                  paddingTop: "0",
+                  paddingBottom: "1px",
+                  paddingLeft: "4px",
+                  paddingRight: "4px",
+                }}
+                type="text"
+                value={customValue}
+                onChange={handleCustomChange}
+                onClick={(e) => e.stopPropagation()}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div style={{ display: "flex", gap: "8px" }}>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleReset();
+          }}
+          className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
+          style={{ marginLeft: "auto", margin: "0", cursor: "pointer", flex: 1 }}
+        >
+          Reset
+        </button>
+        {item.customLineHeight !== false && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              applyCustomLineHeight();
+            }}
+            className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
+            style={{ marginLeft: "auto", margin: "0", cursor: "pointer", flex: 1 }}
           >
             Apply
           </button>
-        </div>
+        )}
+      </div>
+
+      {!item.hideAttribution && (
+        <p
+          style={{
+            color: "var(--theme-elevation-650)",
+            fontSize: "10px",
+            textAlign: "center",
+          }}
+        >
+          Made with ❤️ by{" "}
+          <a target="_blank" href="https://github.com/AdrianMaj">
+            @AdrianMaj
+          </a>
+        </p>
       )}
     </div>
   );

@@ -13,7 +13,6 @@ export const TextLineHeightFeature = createServerFeature<
       clientFeatureProps: {
         hideAttribution: props?.hideAttribution,
         lineHeights: props?.lineHeights,
-        method: props?.method,
         scroll: props?.scroll,
         customLineHeight: props?.customLineHeight,
       },

@@ -20,7 +20,6 @@ import { getSelection } from "../../utils/getSelection";
 export type TextLineHeightFeatureProps = {
   hideAttribution?: boolean;
   lineHeights?: { value: string; label: string }[];
-  method?: "replace" | "combine";
   customLineHeight?: boolean;
   scroll?: boolean;
 };
@@ -30,7 +29,10 @@ export type TextLineHeightItem = ToolbarGroupItem & {
   current: () => string | null;
 } & TextLineHeightFeatureProps;
 
-export const TextLineHeightClientFeature = createClientFeature<TextLineHeightFeatureProps, TextLineHeightItem>(({ props }) => {
+export const TextLineHeightClientFeature = createClientFeature<
+  TextLineHeightFeatureProps,
+  TextLineHeightItem
+>(({ props }) => {
   const DropdownComponent: ToolbarGroup = {
     type: "dropdown",
     ChildComponent: TextLineHeightIcon,
@@ -51,7 +53,6 @@ export const TextLineHeightClientFeature = createClientFeature<TextLineHeightFea
               },
               hideAttribution: props?.hideAttribution,
               lineHeights: props?.lineHeights,
-              method: props?.method,
               scroll: props?.scroll,
               customLineHeight: props?.customLineHeight,
               key: "textLineHeight",
